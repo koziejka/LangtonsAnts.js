@@ -1,10 +1,14 @@
-.game {
-    overflow: scroll;
+#game {
+    overflow: hidden;
     border: solid;
-    width: 90vmin;
-    height: 90vmin;
+    width: 95vmin;
+    height: 95vmin;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+}
+
+canvas {
+    transform-origin: top left
 }
