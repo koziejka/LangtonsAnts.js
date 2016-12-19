@@ -7,10 +7,13 @@ class Ant {
         this.dir = [0, 0]
     }
     move() {
-        // console.log(this.x, this.y, this.dir[0])
         let index
         this.x += this.dir[0]
         this.y += this.dir[1]
+        if (this.x < 0) this.x = maxSize
+        if (this.y < 0) this.y = maxSize
+        if (this.x > maxSize) this.x = 0
+        if (this.y > maxSize) this.y = 0
         if (black.some((x, i) => {
             if (x[0] == this.x && x[1] == this.y) {
                 index = i
@@ -37,12 +40,17 @@ class Ant {
     }
 }
 
-const maxSize = 80
-const game = document.createElement("canvas")
-document.body.appendChild(game)
+const maxSize = 800,
+    game = document.createElement("canvas"),
+    div = document.createElement("div")
+document.body.appendChild(div)
+div.appendChild(game)
+div.className = "game"
+
 game.width = maxSize * 10
 game.height = maxSize * 10
-game.style.border = "solid"
+div.style.border = "solid"
+
 const c = game.getContext("2d"), black = []
 const rotateVector = (vec, ang) => {
     ang = -ang * (Math.PI / 180)
@@ -51,12 +59,8 @@ const rotateVector = (vec, ang) => {
     return new Array(Math.round(10000 * (vec[0] * cos - vec[1] * sin)) / 10000, Math.round(10000 * (vec[0] * sin + vec[1] * cos)) / 10000)
 }
 const ants = [new Ant(40, 40, "red"), new Ant(40, 20, "blue")]
-for (var i = 0; i < 10; i++) {
-    ants.push(
-        new Ant(Math.floor(Math.random() * 20),
-         Math.floor(Math.random() * 20)),
-         new Color().random().toString()
-         )
+for (var i = 0; i < 25; i++) {
+    ants.push(new Ant(0, 0, new Color().random().toString()))
 }
 setInterval(() => {
     for (let ant of ants) {
